@@ -29,6 +29,8 @@ function generateIds(images) {
         if (err) {
           console.log(err);
         } else {
+          console.log(image.path);
+          console.log(`${publicDir}/images/${newName}`);
           console.log('Was added');
           imagesSrcs.push(newName);
           res(newName);
