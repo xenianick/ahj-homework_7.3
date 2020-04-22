@@ -1,8 +1,8 @@
 export default async function createRequest(images, method) {
   const formData = new FormData();
-  let url = 'https://ahj-homework-7-3.herokuapp.com';
+  let url = 'https://ahj-homework-7-3.herokuapp.com/images';
   if (method === 'DELETE') {
-    url = `https://ahj-homework-7-3.herokuapp.com/?${images}`;
+    url = `https://ahj-homework-7-3.herokuapp.com/images/?${images}`;
   }
   let listener = 'readystatechange';
   if (method === 'POST') {

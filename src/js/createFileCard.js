@@ -6,7 +6,7 @@ export default function createFileCard(src) {
   const fileImg = createNewElement('img', 'file-img preview');
   const fileCardDeleteBtn = createNewElement('div', 'file-delete-btn', '&times');
 
-  fileImg.src = `https://ahj-homework-7-3.herokuapp.com/${src}`;
+  fileImg.src = `https://ahj-homework-7-3.herokuapp.com/images/${src}`;
 
   fileCard.appendChild(fileImg);
   fileCard.appendChild(fileCardDeleteBtn);

@@ -21,15 +21,11 @@ const imagesSrcs = [];
 function generateIds(images) {
   const isAllRenamed = [];
   images.forEach((image) => {
-    console.log(image);
     const id = uuidv4();
     const extension = image.name.match(/(?<=\.).+$/).toString();
     const newName = `${id}.${extension}`;
     const renamed = new Promise((res) => {
-      console.log(image.path);
-      console.log(publicDir);
-      console.log(newName);
-      fs.rename(image.path, `${publicDir}/${newName}`, (err) => {
+      fs.copyFile(image.path, `${publicDir}/images/${newName}`, (err) => {
         if (err) {
           console.log(err);
         } else {
@@ -62,8 +58,12 @@ app.use(async (ctx, next) => {
     const imgToDel = ctx.request.url.match(/(?<=\?).+$/).toString();
     const index = imagesSrcs.findIndex((item) => item === imgToDel);
     imagesSrcs.splice(index, 1);
-    fs.unlink(`${publicDir}/${imgToDel}`, () => {
-      console.log('Was deleted');
+    fs.unlink(`${publicDir}/images/${imgToDel}`, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Was deleted');
+      }
     });
     ctx.response.body = 'deleted';
   }
