@@ -25,10 +25,13 @@ function generateIds(images) {
     const extension = image.name.match(/(?<=\.).+$/).toString();
     const newName = `${id}.${extension}`;
     const renamed = new Promise((res) => {
-      fs.rename(image.path, `${publicDir}/${newName}`, () => {
+      fs.rename(image.path, `${publicDir}/${newName}`, (err) => {
         console.log('Was added');
         imagesSrcs.push(newName);
         res(newName);
+        if (err) {
+          console.log('ERROR');
+        }
       });
     });
     isAllRenamed.push(renamed);
