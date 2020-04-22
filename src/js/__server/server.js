@@ -25,7 +25,7 @@ function generateIds(images) {
     const extension = image.name.match(/(?<=\.).+$/).toString();
     const newName = `${id}.${extension}`;
     const renamed = new Promise((res) => {
-      fs.rename(image.path, `${publicDir}/images/${newName}`, () => {
+      fs.rename(image.path, `${publicDir}/${newName}`, () => {
         console.log('Was added');
         imagesSrcs.push(newName);
         res(newName);
@@ -47,14 +47,14 @@ app.use(async (ctx, next) => {
     const justAddedImgs = await generateIds(images);
     ctx.response.body = justAddedImgs;
   }
-  if (ctx.request.method === 'GET' && ctx.request.url === '/images') {
+  if (ctx.request.method === 'GET') {
     ctx.response.body = imagesSrcs;
   }
   if (ctx.request.method === 'DELETE') {
     const imgToDel = ctx.request.url.match(/(?<=\?).+$/).toString();
     const index = imagesSrcs.findIndex((item) => item === imgToDel);
     imagesSrcs.splice(index, 1);
-    fs.unlink(`${publicDir}/images/${imgToDel}`, () => {
+    fs.unlink(`${publicDir}/${imgToDel}`, () => {
       console.log('Was deleted');
     });
     ctx.response.body = 'deleted';
