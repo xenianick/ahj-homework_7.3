@@ -21,16 +21,21 @@ const imagesSrcs = [];
 function generateIds(images) {
   const isAllRenamed = [];
   images.forEach((image) => {
+    console.log(image);
     const id = uuidv4();
     const extension = image.name.match(/(?<=\.).+$/).toString();
     const newName = `${id}.${extension}`;
     const renamed = new Promise((res) => {
+      console.log(image.path);
+      console.log(publicDir);
+      console.log(newName);
       fs.rename(image.path, `${publicDir}/${newName}`, (err) => {
-        console.log('Was added');
-        imagesSrcs.push(newName);
-        res(newName);
         if (err) {
-          console.log('ERROR');
+          console.log(err);
+        } else {
+          console.log('Was added');
+          imagesSrcs.push(newName);
+          res(newName);
         }
       });
     });
